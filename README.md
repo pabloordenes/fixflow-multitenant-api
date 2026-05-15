@@ -12,7 +12,7 @@ This repository serves as a public technical showcase of the core architecture a
 The system is built upon a distributed architecture, emphasizing scalability, data security, and resilience in low-connectivity environments.
 
 ### Backend & Cloud
-* **Framework:** .NET 8 / ASP.NET Core Web API
+* **Framework:** .NET 10 / ASP.NET Core Web API
 * **ORM:** Entity Framework Core
 * **Database:** Relational SQL Database (Multi-Tenant Architecture)
 * **Authentication:** JWT (JSON Web Tokens) with Role-Based Access Control (RBAC)
