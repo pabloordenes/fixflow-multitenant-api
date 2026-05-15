@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FixFlow.Mobile.ViewModels"
+             xmlns:model="clr-namespace:FixFlow.Mobile"
+             x:Class="FixFlow.Mobile.Views.OrdersPage"
+             x:DataType="vm:OrdersViewModel"
+             Title="Órdenes de Trabajo"
+             BackgroundColor="{AppThemeBinding Light=#F3F5F9, Dark=#1B1B1B}">
+
+    <Grid RowDefinitions="Auto, *">
+        
+        <VerticalStackLayout Grid.Row="0" Padding="15" Spacing="10" BackgroundColor="{AppThemeBinding Light=White, Dark=#2D2D2D}">
+            <SearchBar Placeholder="Buscar por cliente, ID..."
+                       Text="{Binding SearchText}"
+                       SearchCommand="{Binding SearchCommand}"
+                       Background="Transparent"/>
+            
+            <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                <HorizontalStackLayout Spacing="10">
+                    <Border StrokeShape="RoundRectangle 20" BackgroundColor="#512BD4" Padding="15,8" StrokeThickness="0">
+                        <Label Text="Todas" TextColor="White" FontAttributes="Bold"/>
+                    </Border>
+                    <Border StrokeShape="RoundRectangle 20" BackgroundColor="#E0E0E0" Padding="15,8" StrokeThickness="0">
+                        <Label Text="Pendientes" TextColor="Black"/>
+                    </Border>
+                    <Border StrokeShape="RoundRectangle 20" BackgroundColor="#E0E0E0" Padding="15,8" StrokeThickness="0">
+                        <Label Text="En Proceso" TextColor="Black"/>
+                    </Border>
+                    <Border StrokeShape="RoundRectangle 20" BackgroundColor="#E0E0E0" Padding="15,8" StrokeThickness="0">
+                        <Label Text="Terminadas" TextColor="Black"/>
+                    </Border>
+                </HorizontalStackLayout>
+            </ScrollView>
+        </VerticalStackLayout>
+
+        <RefreshView Grid.Row="1" 
+                     Command="{Binding RefreshCommand}"
+                     IsRefreshing="{Binding IsBusy}">
+            
+            <CollectionView ItemsSource="{Binding Orders}"
+                            SelectionMode="Single"
+                            Margin="10">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
+                </CollectionView.ItemsLayout>
+                
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border StrokeShape="RoundRectangle 10" 
+                                StrokeThickness="0"
+                                BackgroundColor="{AppThemeBinding Light=White, Dark=#2D2D2D}"
+                                Padding="15">
+                            <Grid RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="*, Auto">
+                                
+                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding Id, StringFormat='Orden #{0}'}" FontAttributes="Bold" FontSize="16"/>
+                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Date, StringFormat='{0:dd/MM/yyyy}'}" FontSize="12" TextColor="Gray"/>
+
+                                <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding CustomerName}" FontSize="14" TextColor="#512BD4" Margin="0,5"/>
+
+                                <Label Grid.Row="2" Grid.Column="0" Text="{Binding Description}" FontSize="13" TextColor="Gray" LineBreakMode="TailTruncation"/>
+                                
+                                <Border Grid.Row="2" Grid.Column="1" StrokeShape="RoundRectangle 5" BackgroundColor="#FFF4E5" StrokeThickness="0" Padding="8,2" HorizontalOptions="End">
+                                    <Label Text="{Binding Status}" TextColor="#FF9F43" FontSize="11" FontAttributes="Bold"/>
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="10">
+                        <Label Text="No hay órdenes" FontSize="20" FontAttributes="Bold" TextColor="Gray" HorizontalOptions="Center"/>
+                        <Label Text="Intenta cambiar los filtros" FontSize="14" TextColor="Gray" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+
+            </CollectionView>
+        </RefreshView>
+    </Grid>
+</ContentPage>

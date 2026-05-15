@@ -1,0 +1,17 @@
+﻿using FixFlow.API.Entities.WorkOrderModels;
+
+namespace FixFlow.API.Entities;
+
+public class User
+{
+    public Guid Id { get; set; }
+    public required string FullName { get; set; }
+    public required string Email { get; set; }
+    public string? TaxId { get; set; } // RUT
+    public required string Role { get; set; }
+    public string? AvatarUrl { get; set; }
+    
+    public Guid TenantId { get; set; }
+    public Tenant? Tenant { get; set; }
+
+}

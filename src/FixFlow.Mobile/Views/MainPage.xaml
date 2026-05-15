@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FixFlow.Mobile.ViewModels"
+             x:Class="FixFlow.Mobile.Views.MainPage"
+             x:DataType="vm:MainViewModel"
+             Title="FixFlow Dashboard"
+             BackgroundColor="{AppThemeBinding Light=#F3F5F9, Dark=#1B1B1B}">
+
+    <Grid RowDefinitions="Auto, *">
+        
+        <Grid Grid.Row="0" BackgroundColor="#512BD4" Padding="20,20,20,40" RowDefinitions="Auto, Auto">
+            <Label Grid.Row="0" Text="Hola, Fernando" TextColor="White" Opacity="0.8" FontSize="14"/>
+            <Label Grid.Row="1" Text="Resumen del Día" TextColor="White" FontAttributes="Bold" FontSize="24"/>
+        </Grid>
+
+        <ScrollView Grid.Row="1" Margin="0,-30,0,0">
+            <VerticalStackLayout Padding="20" Spacing="20">
+
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="15">
+                    <Border Grid.Column="0" StrokeShape="RoundRectangle 15" BackgroundColor="{AppThemeBinding Light=White, Dark=#2D2D2D}" StrokeThickness="0" HeightRequest="120">
+                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="5">
+                            <Label Text="12" FontSize="36" FontAttributes="Bold" TextColor="#E02E2E" HorizontalOptions="Center"/>
+                            <Label Text="Pendientes" FontSize="14" TextColor="Gray" HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Border Grid.Column="1" StrokeShape="RoundRectangle 15" BackgroundColor="{AppThemeBinding Light=White, Dark=#2D2D2D}" StrokeThickness="0" HeightRequest="120">
+                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="5">
+                            <Label Text="8" FontSize="36" FontAttributes="Bold" TextColor="#28C76F" HorizontalOptions="Center"/>
+                            <Label Text="Listas hoy" FontSize="14" TextColor="Gray" HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <Label Text="Acciones Rápidas" FontAttributes="Bold" FontSize="18" Margin="0,10,0,0"/>
+                
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
+                    <Button Text="Nueva Orden" Grid.Column="0" BackgroundColor="#512BD4" HeightRequest="60" FontSize="12" LineBreakMode="WordWrap"/>
+                    <Button Text="Escanear QR" Grid.Column="1" BackgroundColor="#4B4B4B" HeightRequest="60" FontSize="12"/>
+                    <Button Text="Reportes" Grid.Column="2" BackgroundColor="#4B4B4B" HeightRequest="60" FontSize="12"/>
+                </Grid>
+
+                <Label Text="Actividad Reciente" FontAttributes="Bold" FontSize="18" Margin="0,10,0,0"/>
+                
+                <Border StrokeShape="RoundRectangle 10" BackgroundColor="{AppThemeBinding Light=White, Dark=#2D2D2D}" Padding="15">
+                    <Label Text="Orden #4023 actualizada a 'En Proceso' hace 10 min" FontSize="14" TextColor="Gray"/>
+                </Border>
+                <Border StrokeShape="RoundRectangle 10" BackgroundColor="{AppThemeBinding Light=White, Dark=#2D2D2D}" Padding="15">
+                    <Label Text="Nuevo cliente registrado: DGS Minería" FontSize="14" TextColor="Gray"/>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

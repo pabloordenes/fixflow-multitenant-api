@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:FixFlow.Mobile.ViewModels"
+             x:Class="FixFlow.Mobile.Views.LoginPage"
+             x:DataType="vm:LoginViewModel"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{AppThemeBinding Light=#F3F5F9, Dark=#252525}">
+
+    <ScrollView>
+        <Grid Padding="30"
+              BackgroundColor="#252525">
+            
+            <Image Source="fixflowlogofix.png"
+                   Aspect="AspectFill"
+                   Opacity="0.08"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   TranslationY="100"
+                   InputTransparent="True"/>
+            
+            <Grid RowDefinitions="*,Auto,*">
+                <VerticalStackLayout Grid.Row="1"
+                                     Spacing="25"
+                                     VerticalOptions="Center">
+                    
+                    <Image Source="fixflowlogo.png"
+	                       HeightRequest="80"
+	                       HorizontalOptions="Center"
+	                       Aspect="AspectFit"
+                           />
+
+                    <Label Text="LOGIN"
+                           FontSize="48"
+	                       FontFamily="Livvici"
+                           FontAttributes="None"
+                           HorizontalOptions="Center"
+                           TextColor="#E5E7EB" />
+
+                    <VerticalStackLayout Spacing="15" Margin="0,20,0,0">
+                        <Border StrokeShape="RoundRectangle 5" StrokeThickness="0.5" 
+                                BackgroundColor="Transparent"
+                                Padding="15,5"
+                                Stroke="Transparent"
+                                WidthRequest="280">
+                            
+                            <Entry Placeholder="Correo"
+                                   Text="{Binding Username}"
+                                   TextColor="#E5E7EB" 
+                                   PlaceholderColor="#808080" 
+                                   InputTransparent="True"
+                                   />
+                        </Border>
+
+                        <Border StrokeShape="RoundRectangle 5" StrokeThickness="0.5"
+                                BackgroundColor="Transparent"
+                                Padding="15,5"
+                                Stroke="Transparent"
+                                WidthRequest="280">
+                            
+                            <Entry Placeholder="Contraseña"
+                                   Text="{Binding Password}"
+                                   IsPassword="True"
+                                   TextColor="#E5E7EB"
+                                   PlaceholderColor="#808080" />
+                        </Border>
+
+                        <Label Text="No tienes cuenta? Crear una."
+                               FontSize="15"
+                               TextColor="#808080"
+		                       HorizontalOptions="Start"
+                               Margin="15,0,0,0" />
+                    </VerticalStackLayout>
+
+                    <Button Text="LOGIN"
+                            Command="{Binding LoginCommand}"
+                            IsEnabled="{Binding IsNotBusy}"
+                            BackgroundColor="#FFDD00"
+                            TextColor="BLACK"
+                            FontFamily="MPLUS2Bold"
+                            CornerRadius="5"
+                            HeightRequest="48"
+                            WidthRequest="280"
+                            Margin="0,20,0,0">
+                    </Button>
+
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" 
+                                       IsVisible="{Binding IsBusy}"
+                                       Color="Black"
+                                       HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Grid>
+        </Grid>
+    </ScrollView>
+</ContentPage>
+
+
