@@ -1,7 +1,9 @@
 ﻿using FixFlow.API.Entities;
 using FixFlow.API.Entities.WorkOrderModels;
 using FixFlow.API.Services.Tenant;
+using FixFlow.Shared.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace FixFlow.API.Data;
 
@@ -72,5 +74,22 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<Customer>()
             .HasIndex(c => new { c.TenantId, c.Rut })
             .IsUnique();
+
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+        {
+            // Revisamos si la entidad implementa IMustHaveTenant
+            if (typeof(IMustHaveTenant).IsAssignableFrom(entityType.ClrType))
+            {
+                var parameter = Expression.Parameter(entityType.ClrType, "e");
+                var body = Expression.Equal(
+                    Expression.Property(parameter, nameof(IMustHaveTenant.TenantId)),
+                    Expression.Property(Expression.Constant(_currentTenantService), nameof(ICurrentTenantService.TenantId))
+                );
+                var filter = Expression.Lambda(body, parameter);
+
+                // Aplicamos el filtro global dinámicamente
+                modelBuilder.Entity(entityType.ClrType).HasQueryFilter(filter);
+            }
+        }
     }
 }

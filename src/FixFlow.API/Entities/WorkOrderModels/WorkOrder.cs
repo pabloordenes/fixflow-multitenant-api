@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FixFlow.Shared.Interfaces;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FixFlow.API.Entities.WorkOrderModels;
 
-public class WorkOrder
+public class WorkOrder : IMustHaveTenant
 {
     public Guid Id { get; set; }
 
@@ -18,7 +19,6 @@ public class WorkOrder
 
     public DateTime ScheduledDate { get; set; }
 
-    public required string ClientName { get; set; } = string.Empty;
     [MaxLength(200)]
     public required string Address { get; set; } = string.Empty;
     public double Latitude { get; set; }
