@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31903.59
+# Visual Studio Version 18
+VisualStudioVersion = 18.5.11723.231 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{827E0CD3-B72D-47B6-A68D-7590B98EB39B}"
 EndProject
@@ -12,6 +12,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FixFlow.Web", "src\FixFlow.Web\FixFlow.Web.csproj", "{7C5A07B9-CDDE-4526-AB1A-0FE7FB1A0A13}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FixFlow.Mobile", "src\FixFlow.Mobile\FixFlow.Mobile.csproj", "{B7941E55-11E6-490E-A8AE-854EEAC7CED7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7886FEC5-5DF2-420F-9C64-DBBEAEC7A26B}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -80,5 +85,8 @@ Global
 		{4A92B0AA-20B3-48E0-9C55-82B847127D43} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{7C5A07B9-CDDE-4526-AB1A-0FE7FB1A0A13} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{B7941E55-11E6-490E-A8AE-854EEAC7CED7} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {506809D5-D67E-459E-A4C1-90D51AE9B4DA}
 	EndGlobalSection
 EndGlobal

@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  # Base de Datos Local
+  fixflow-db:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    environment:
+      - ACCEPT_EULA=1
+      - MSSQL_SA_PASSWORD=FixFlowAdmin2026!
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql_data:/var/opt/mssql
+    networks:
+      - fixflow-network
+
+  # Emulador de Azure Storage
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite:latest
+    ports:
+      - "10000:10000"
+      - "10001:10001"
+      - "10002:10002"
+    networks:
+      - fixflow-network
+
+  # API REST Multi-Tenant
+  fixflow-api:
+    build: 
+      context: . # Contexto en la raíz de la solución
+      dockerfile: src/FixFlow.API/Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=fixflow-db;Database=FixFlowDb;User=sa;Password=FixFlowAdmin2026!;TrustServerCertificate=True;
+      - AzureWebJobsStorage=UseDevelopmentStorage=true;
+    depends_on:
+      - fixflow-db
+      - azurite
+    networks:
+      - fixflow-network
+
+volumes:
+  sql_data:
+
+networks:
+  fixflow-network:
+    driver: bridge

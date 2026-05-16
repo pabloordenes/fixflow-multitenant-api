@@ -1,6 +1,7 @@
 # FixFlow - Field Service Management (SaaS)
 
 > Note: This repository is currently under active development.
+> Note: This credentials inside docker-compose.yml are dummy passwords intended strictly for local development and testing.
 
 ## Project Overview
 FixFlow is a comprehensive Software as a Service (SaaS) platform engineered to orchestrate field operations, manage work orders, and establish a reliable technological bridge between centralized administration and deployed technicians. 
