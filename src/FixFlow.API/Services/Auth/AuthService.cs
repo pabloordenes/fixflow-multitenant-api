@@ -1,6 +1,6 @@
 ﻿using FixFlow.API.Data;
 using FixFlow.API.Interfaces.Auth;
-using FixFlow.Shared.Dtos.Auth;
+using FixFlow.Shared.Dtos.Auth.Login;
 using FixFlow.Shared.Dtos.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;

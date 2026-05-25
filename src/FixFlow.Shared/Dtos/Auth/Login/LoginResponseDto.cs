@@ -1,7 +1,7 @@
 ﻿using FixFlow.Shared.Dtos.Common;
 
 
-namespace FixFlow.Shared.Dtos.Auth;
+namespace FixFlow.Shared.Dtos.Auth.Login;
 
 public class LoginResponseDto
 {

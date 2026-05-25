@@ -1,4 +1,4 @@
-﻿using FixFlow.Shared.Dtos.Auth;
+﻿using FixFlow.Shared.Dtos.Auth.Login;
 
 namespace FixFlow.API.Interfaces.Auth
 {

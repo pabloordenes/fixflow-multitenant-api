@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FixFlow.Shared.Dtos.Auth;
+namespace FixFlow.Shared.Dtos.Auth.Login;
 
 public class LoginRequestDto
 {

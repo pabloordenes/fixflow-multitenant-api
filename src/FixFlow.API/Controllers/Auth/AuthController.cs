@@ -1,5 +1,5 @@
 ﻿using FixFlow.API.Interfaces.Auth;
-using FixFlow.Shared.Dtos.Auth;
+using FixFlow.Shared.Dtos.Auth.Login;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FixFlow.API.Controllers.Auth
