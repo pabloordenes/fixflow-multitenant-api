@@ -1,6 +1,7 @@
 ﻿using FixFlow.API.Data;
 using FixFlow.API.Interfaces.Auth;
 using FixFlow.Shared.Dtos.Auth.Login;
+using FixFlow.Shared.Dtos.Auth.Register;
 using FixFlow.Shared.Dtos.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -49,6 +50,40 @@ namespace FixFlow.API.Services.Auth
                     Role = user.Role!
                 }
             };
+        }
+
+        public async Task<bool> RegisterTenantAsync(RegisterTenantRequestDto request)
+        {
+            var emailExists = await _context.Users.IgnoreQueryFilters().AnyAsync(u => u.Email == request.Email);
+            if (emailExists)
+                throw new InvalidOperationException("El correo electrónico ya está registrado.");
+
+            var newTenant = new Entities.Tenant
+            {
+                Name = request.CompanyName,
+                TaxId = request.CompanyRut,
+                Industry = request.Services ?? "",
+                IsActive = true,
+                Plan = "Free",
+                CreatedAt = DateTime.UtcNow
+            };
+
+            var adminUser = new Entities.User
+            {
+                FullName = request.FullName,
+                Email = request.Email,
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
+                Role = "Admin",
+                TaxId = request.UserRut
+            };
+
+            newTenant.Users.Add(adminUser);
+
+            _context.Tenants.Add(newTenant);
+
+            await _context.SaveChangesAsync();
+
+            return true;
         }
 
         private string GenerateJwtToken(Entities.User user)
