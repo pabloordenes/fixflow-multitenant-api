@@ -25,6 +25,11 @@ public static class MauiProgram
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif
+		builder.Services.AddHttpClient<AuthApiClient>(client =>
+		{
+			client.BaseAddress = new Uri(AppConfig.DevTunnelBaseUrl);
+			client.Timeout = TimeSpan.FromSeconds(30);
+		});
 		
 		builder.Services.AddTransient<LoginPage>();
 		builder.Services.AddTransient<LoginViewModel>();
