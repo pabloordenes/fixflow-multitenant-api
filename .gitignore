@@ -480,3 +480,8 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# local config
+AppConfig.cs
+start-tunnel-api.cmd
+start-tunnel-web.cmd
