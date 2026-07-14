@@ -1,52 +1,47 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Threading.Tasks;
+using FixFlow.Mobile.Services;
 
 namespace FixFlow.Mobile.ViewModels;
 
 public partial class LoginViewModel : ObservableObject
 {
-    private string _username = string.Empty;
-    public string Username
-    {
-        get => _username;
-        set => SetProperty(ref _username, value);
-    }
+    private readonly AuthApiClient _authClient;
 
-    private string _password = string.Empty;
-    public string Password
-    {
-        get => _password;
-        set => SetProperty(ref _password, value);
-    }
+    [ObservableProperty] private string _email = string.Empty;
 
+    [ObservableProperty] private string _password = string.Empty;
+
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(IsNotBusy))]
     private bool _isBusy;
-    public bool IsBusy
-    {
-        get => _isBusy;
-        set
-        {
-            // SetProperty actualiza el valor y notifica a la interfaz.
-            // Si el valor cambia, también notificamos que IsNotBusy cambió.
-            if (SetProperty(ref _isBusy, value))
-            {
-                OnPropertyChanged(nameof(IsNotBusy));
-            }
-        }
-    }
 
+    [ObservableProperty] private string _errorMessage = string.Empty;
     public bool IsNotBusy => !IsBusy;
 
     [RelayCommand]
     private async Task LoginAsync()
     {
-        if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Password))
+        if (string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Password))
+        {
+            ErrorMessage = "Por favor, ingresa tus credenciales";
             return;
+        }
 
         IsBusy = true;
+        ErrorMessage = string.Empty;
 
-        // Simulación de llamada a la API
-        await Task.Delay(2000);
+        var response = await _authClient.LoginAsync(Email, Password);
+
+        if (response != null && string.IsNullOrEmpty(response.Token))
+        {
+            // navegacion pendiente
+            Console.WriteLine($"Token recibido:{response.Token}");
+        }
+        else
+        {
+            ErrorMessage = "Credenciales incorrectas o servidor no disponible";
+        }
 
         IsBusy = false;
     }
