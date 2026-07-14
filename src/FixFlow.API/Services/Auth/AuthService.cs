@@ -47,7 +47,8 @@ namespace FixFlow.API.Services.Auth
                     Id = user.Id.ToString(),
                     FullName = user.FullName,
                     Email = user.Email,
-                    Role = user.Role!
+                    Role = user.Role!,
+                    TenantId = user.TenantId.ToString()
                 }
             };
         }
