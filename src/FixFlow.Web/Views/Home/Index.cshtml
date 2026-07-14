@@ -3,6 +3,83 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome to FixFlow</h1>
+    <p>Portal de Acceso</p>
+
+    <form id="formSolicitud">
+        <input type="email" id="email" name="email" placeholder="Correo Electrónico" required>
+        <input type="password" id="password" name="password" placeholder="Contraseña" required />
+
+        <button type="submit">Ingreso</button>
+    </form>
 </div>
+
+@section Scripts {
+    <script>
+        document.getElementById('formSolicitud').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const form = e.target;
+            const btnSubmit = form.querySelector('button[type="submit"]');
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const payload = {
+                email: email,
+                password: password
+            };
+
+            btnSubmit.disabled = true;
+            const textoOriginal = btnSubmit.innerHTML;
+            btnSubmit.innerHTML = 'PROCESANDO SOLICITUD...';
+
+            try {
+                // 1. URL limpia sin barra al final. (ASEGÚRATE QUE SEA EL PUERTO DE LA API, NO DEL WEB)
+                const API_BASE_URL = 'https://rknzgfng-7016.brs.devtunnels.ms';
+
+                const response = await fetch(`${API_BASE_URL}/api/Auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-DevTunnel-Skip': 'true'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                // 2. ESCUDO DE SEGURIDAD: Leemos el texto crudo primero, sin forzar el JSON
+                const responseText = await response.text();
+
+                // 3. Evaluamos si el servidor nos rechazó antes de procesar la data
+                if (!response.ok) {
+                    // Si el túnel devuelve un error, lo imprimimos claramente
+                    console.error("Error del servidor:", response.status, responseText);
+                    
+                    if (response.status === 404) {
+                        alert("ERROR 404: No se encontró la API. Revisa que API_BASE_URL sea el túnel correcto.");
+                    } else if (response.status === 401) {
+                        alert("CREDENCIALES INCORRECTAS o Túnel Privado bloqueando el acceso.");
+                    } else {
+                        alert(`FALLO EN SERVIDOR. Código: ${response.status}`);
+                    }
+                    return; // Detenemos la ejecución para evitar el colapso
+                }
+
+                // 4. Si llegamos aquí, la petición fue un éxito 200 OK. Es seguro parsear el JSON.
+                const data = responseText ? JSON.parse(responseText) : {};
+
+                form.reset();
+                alert("INGRESO EXITOSO. Token recibido.");
+                console.log("Datos del usuario:", data);
+
+            } catch (error) {
+                console.error("Error crítico de JS:", error);
+                alert("FALLO DE INFRAESTRUCTURA: No se pudo conectar con el servidor central. Revisa la consola (F12).");
+            } finally {
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = textoOriginal;
+            }
+        });
+    </script>
+}
