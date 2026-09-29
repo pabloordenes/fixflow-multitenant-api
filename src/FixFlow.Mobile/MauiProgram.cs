@@ -40,6 +40,8 @@ public static class MauiProgram
 
 		builder.Services.AddTransient<OrdersPage>();
 		builder.Services.AddTransient<OrdersViewModel>();
+
+		builder.Services.AddTransient<AuthInterceptor>();
 		
 
 		return builder.Build();
