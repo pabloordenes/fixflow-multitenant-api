@@ -5,6 +5,7 @@ using FixFlow.Mobile.Services;
 using FixFlow.Mobile.Views;
 using System;
 using System.Net.Http;
+using FixFlow.Mobile.Services.WorkOrder;
 
 namespace FixFlow.Mobile;
 
@@ -15,8 +16,8 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
-            .UseMauiCommunityToolkit()
-            .ConfigureFonts(fonts =>
+			.UseMauiCommunityToolkit()
+			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
@@ -27,10 +28,10 @@ public static class MauiProgram
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif
-		
-        // Configuración de HttpClient para AuthApiClient
-        builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri(AppConfig.DevTunnelBaseUrl) });
-        builder.Services.AddSingleton<AuthApiClient>();
+
+		// Configuración de HttpClient para AuthApiClient
+		builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri(AppConfig.DevTunnelBaseUrl) });
+		builder.Services.AddSingleton<AuthApiClient>();
 
 		builder.Services.AddTransient<LoginPage>();
 		builder.Services.AddTransient<LoginViewModel>();
@@ -42,8 +43,13 @@ public static class MauiProgram
 		builder.Services.AddTransient<OrdersViewModel>();
 
 		builder.Services.AddTransient<AuthInterceptor>();
-		
 
-		return builder.Build();
+		builder.Services.AddHttpClient<IWorkOrderService, WorkOrderService>(client =>
+		{
+			client.BaseAddress = new Uri(AppConfig.DevTunnelBaseUrl);
+		})
+		.AddHttpMessageHandler<AuthInterceptor>();
+
+        return builder.Build();
 	}
 }
