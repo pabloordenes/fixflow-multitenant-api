@@ -3,6 +3,8 @@ using CommunityToolkit.Maui;
 using FixFlow.Mobile.ViewModels;
 using FixFlow.Mobile.Services;
 using FixFlow.Mobile.Views;
+using System;
+using System.Net.Http;
 
 namespace FixFlow.Mobile;
 
@@ -25,12 +27,11 @@ public static class MauiProgram
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif
-		builder.Services.AddHttpClient<AuthApiClient>(client =>
-		{
-			client.BaseAddress = new Uri(AppConfig.DevTunnelBaseUrl);
-			client.Timeout = TimeSpan.FromSeconds(30);
-		});
 		
+        // Configuración de HttpClient para AuthApiClient
+        builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri(AppConfig.DevTunnelBaseUrl) });
+        builder.Services.AddSingleton<AuthApiClient>();
+
 		builder.Services.AddTransient<LoginPage>();
 		builder.Services.AddTransient<LoginViewModel>();
 

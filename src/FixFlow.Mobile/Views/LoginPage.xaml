@@ -45,7 +45,7 @@
                                 WidthRequest="280">
                             
                             <Entry Placeholder="Correo"
-                                   Text="{Binding Username}"
+                                   Text="{Binding Email}"
                                    TextColor="#E5E7EB" 
                                    PlaceholderColor="#808080" 
                                    InputTransparent="True"
@@ -93,5 +93,3 @@
         </Grid>
     </ScrollView>
 </ContentPage>
-
-

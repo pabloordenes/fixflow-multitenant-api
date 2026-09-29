@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using System.Threading.Tasks;
 using FixFlow.Mobile.Services;
+using System;
 
 namespace FixFlow.Mobile.ViewModels;
 
@@ -19,6 +20,11 @@ public partial class LoginViewModel : ObservableObject
     [ObservableProperty] private string _errorMessage = string.Empty;
     public bool IsNotBusy => !IsBusy;
 
+    public LoginViewModel(AuthApiClient authApiClient)
+    {
+        _authClient = authApiClient;
+    }
+
     [RelayCommand]
     private async Task LoginAsync()
     {
@@ -33,7 +39,7 @@ public partial class LoginViewModel : ObservableObject
 
         var response = await _authClient.LoginAsync(Email, Password);
 
-        if (response != null && string.IsNullOrEmpty(response.Token))
+        if (response != null && !string.IsNullOrEmpty(response.Token))
         {
             // navegacion pendiente
             Console.WriteLine($"Token recibido:{response.Token}");
